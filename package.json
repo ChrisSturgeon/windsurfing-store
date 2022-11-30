@@ -6,15 +6,18 @@
     "start": "node ./bin/www",
     "devstart": "nodemon ./bin/www",
     "serverstart": "DEBUG=windsurfing-store:* npm run devstart",
-    "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css"
+    "tailwind:css": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch"
   },
   "dependencies": {
+    "async": "^3.2.4",
     "autoprefixer": "^10.4.13",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "mongoose": "^6.7.4",
     "morgan": "~1.9.1",
     "postcss": "^8.4.19",
     "postcss-cli": "^10.0.0",
