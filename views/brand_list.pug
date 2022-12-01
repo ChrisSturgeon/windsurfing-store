@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+  
+  div(class="flex flex-col justify-center items-center gap-5")
+
+
+    h1(class="text-3xl")= title
+
+    ul 
+      each brand in list_brands 
+        li 
+          a(href=brand.url) #{brand.name}
+      
+      else
+        li There are no brands!

@@ -18,7 +18,7 @@ const SKUInstanceSchema = new Schema({
 
 // Returns URL of SKU Instance
 SKUInstanceSchema.virtual('url').get(function () {
-  return `/catalog/skuinstance/${this._id}`;
+  return `/stock/skuinstance/${this._id}`;
 });
 
 // Returns size and unit of SKY type eg. '90 Litres' or '5.4 m2'

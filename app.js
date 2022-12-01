@@ -5,8 +5,11 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const indexRouter = require('./routes/index');
+
+// router imports
 const usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const stockRouter = require('./routes/stock');
 
 const app = express();
 
@@ -28,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/stock', stockRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

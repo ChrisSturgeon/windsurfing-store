@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-
+require('dotenv').config();
 console.log('Loading Sample Data...');
 
 // Get arguments passed on command line
@@ -17,7 +17,7 @@ var Discipline = require('./models/discipline');
 var SKUInstance = require('./models/skuInstance');
 
 var mongoose = require('mongoose');
-var mongoDB = userArgs[0];
+var mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
@@ -30,9 +30,9 @@ var skuinstances = [];
 
 function brandCreate(name, about, cb) {
   // Make temp object mirroring model schema
-  brandDetail = { name: name, about: about };
+  branddetail = { name: name, about: about };
 
-  var brand = new Brand(brandDetail);
+  var brand = new Brand(branddetail);
 
   brand.save(function (err) {
     if (err) {
@@ -67,9 +67,8 @@ function skuCreate(category, brand, model, discipline, price, cb) {
     discipline: discipline,
     price: price,
   };
-  if (discipline != false) bookdetail.skudetail = discipline;
 
-  var sku = new SKU(SKUDetail);
+  var sku = new SKU(skudetail);
   sku.save(function (err) {
     if (err) {
       cb(err, null);
@@ -89,7 +88,7 @@ function skuInstanceCreate(sku, size, unit, quality, cb) {
     quality: quality,
   };
 
-  var skuinstance = new SKUInstance(SKUInstanceDetail);
+  var skuinstance = new SKUInstance(skuinstancedetail);
   skuinstance.save(function (err) {
     if (err) {
       console.log('ERROR CREATING SKUInstance: ' + skuinstance);

@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+
+  h1(class="text-4xl")= brand.name
+  p=brand.about
+
+  ul 
+    each item in items_list 
+      li
+        a(href=item.url class="font-bold") #{item.model}
+

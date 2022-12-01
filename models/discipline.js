@@ -13,7 +13,7 @@ const DisciplineSchema = new Schema({
 
 // Discipline virtuals
 DisciplineSchema.virtual('url').get(function () {
-  return `/catalog/discipline/${this._id}`;
+  return `/stock/discipline/${this._id}`;
 });
 
 module.exports = mongoose.model('Discipline', DisciplineSchema);

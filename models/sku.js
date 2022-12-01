@@ -17,7 +17,7 @@ const SKUSchema = new Schema({
 
 // SKU model virtuals
 SKUSchema.virtual('url').get(function () {
-  return `/catalog/sku/${this._id}`;
+  return `/stock/sku/${this._id}`;
 });
 
 module.exports = mongoose.model('SKU', SKUSchema);
