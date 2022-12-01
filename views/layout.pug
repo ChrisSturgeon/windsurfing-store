@@ -7,9 +7,12 @@ html(lang='en')
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
-    div(class="flex justify-center bg-sky-200 ")
-      a(href="/") 
-        h1(class="text-5xl p-4 font-bold") Windsurf Hut 
+    div(class="flex flex-wrap justify-between content-center p-2 gap-2 sm:px-10 gap-100 bg-gradient-to-r from-cyan-500 to-blue-500 ")
+      a(href="/" class="flex grow sm:grow-0 justify-center text-5xl text-white font-bold ") Windsurf Hut
+      div(class="flex grow sm:grow-0 gap-4 justify-around items-center text-white")
+        a(href="/stock/all_brands")  Brands
+        a(href="/stock/all_disciplines") Components
+        a(href="/stock/all_disciplines") Styles
 
     
     div

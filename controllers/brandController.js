@@ -2,6 +2,7 @@ const Brand = require('../models/brand');
 const SKU = require('../models/sku');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
+const brand = require('../models/brand');
 
 // Index page
 exports.index = (req, res, next) => {
@@ -19,6 +20,14 @@ exports.brand_create_post = [
   body('brand_name', 'Brand name required')
     .trim()
     .isLength({ min: 1 })
+    .escape(),
+
+  body('about')
+    .trim()
+    .isLength({ max: 2000 })
+    .withMessage('About exceeds max of 2000 characters')
+    .isLength({ min: 1 })
+    .withMessage('About section required')
     .escape(),
 
   // Process request now sanitised
@@ -44,12 +53,12 @@ exports.brand_create_post = [
     } else {
       // Data from form is valid
       // Check if brand already exists
-      Brand.findOne({ name: req.body.name }).exec((err, found_brand) => {
+      Brand.findOne({ name: req.body.brand_name }).exec((err, found_brand) => {
         if (err) {
           return next(err);
         }
         if (found_brand) {
-          res.redirect(found.brand.url);
+          res.redirect(found_brand.url);
         } else {
           brand.save((err) => {
             if (err) {
@@ -125,13 +134,74 @@ exports.brand_delete_post = (req, res, next) => {
 
 // Form for updating brand on GET
 exports.brand_update_get = (req, res, next) => {
-  res.send('Brand Update GET');
+  Brand.findById(req.params.id).exec((err, found_brand) => {
+    if (err) {
+      return next(err);
+    }
+    // Found the brand so pass to form
+    res.render('brand_create', {
+      title: `Update details for ${brand.name}`,
+      brand: found_brand,
+    });
+  });
 };
 
 // Form for updating brand on POST
-exports.brand_update_post = (req, res, next) => {
-  res.send('Brand Update POST');
-};
+exports.brand_update_post = [
+  // Validate and sanitise
+
+  body('brand_name', 'Brand name required')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  body('about')
+    .trim()
+    .isLength({ max: 2000 })
+    .withMessage('About exceeds max of 2000 characters')
+    .isLength({ min: 1 })
+    .withMessage('About section required')
+    .escape(),
+
+  // Process request
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    const brand = new Brand({
+      name: req.body.brand_name,
+      about: req.body.about,
+      _id: req.params.id,
+    });
+
+    // Check for errors and render form again is neccessary
+    if (!errors.isEmpty()) {
+      res.render('brand_create', {
+        title: `Update details for ${brand.name}`,
+        brand: brand,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Check updated brand name doesn't already exist
+      Brand.findOne({ name: req.body.brand_name }).exec((err, found_brand) => {
+        if (err) {
+          return next(err);
+        }
+        if (found_brand) {
+          res.redirect(found_brand.url);
+        } else {
+          Brand.findByIdAndUpdate(req.params.id, brand, {}, (err, thebrand) => {
+            if (err) {
+              return next(err);
+            }
+            res.redirect(thebrand.url);
+          });
+        }
+      });
+    }
+  },
+];
 
 // Detail page for an individual brand
 exports.brand_detail = (req, res, next) => {
@@ -159,8 +229,6 @@ exports.brand_detail = (req, res, next) => {
       });
     }
   );
-
-  // res.send(`This is a page for the brand with object ID ${req.params.id}`);
 };
 
 // Page for all brands

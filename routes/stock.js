@@ -24,6 +24,9 @@ router.post('/brand/:id/delete', brand_controller.brand_delete_post);
 // GET request for updating a brand
 router.get('/brand/:id/update', brand_controller.brand_update_get);
 
+// POST request for updating a brand
+router.post('/brand/:id/update', brand_controller.brand_update_post);
+
 // GET request for individual brand page
 router.get('/brand/:id', brand_controller.brand_detail);
 
