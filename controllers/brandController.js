@@ -1,8 +1,7 @@
-const { reset } = require('nodemon');
-const { response } = require('../app');
 const Brand = require('../models/brand');
 const SKU = require('../models/sku');
 const async = require('async');
+const { body, validationResult } = require('express-validator');
 
 // Index page
 exports.index = (req, res, next) => {
@@ -11,22 +10,117 @@ exports.index = (req, res, next) => {
 
 // Display create brand form on GET
 exports.brand_create_get = (req, res, next) => {
-  res.send('Create Brand GET');
+  res.render('brand_create', { title: 'Create a new brand' });
 };
 
 // Handle create brand form on POST
-exports.brand_create_post = (req, res, next) => {
-  res.send('Create brand POST');
-};
+exports.brand_create_post = [
+  // Validate and sanitise
+  body('brand_name', 'Brand name required')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  // Process request now sanitised
+  (req, res, next) => {
+    // Extract validation errors from the request
+    const errors = validationResult(req);
+
+    // Create a brand object with the santised data
+    const brand = new Brand({
+      name: req.body.brand_name,
+      about: req.body.about,
+    });
+
+    // Check for error and render form again if neccessary
+
+    if (!errors.isEmpty()) {
+      res.render('brand_create', {
+        title: 'Create a new brand',
+        brand: brand,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      // Data from form is valid
+      // Check if brand already exists
+      Brand.findOne({ name: req.body.name }).exec((err, found_brand) => {
+        if (err) {
+          return next(err);
+        }
+        if (found_brand) {
+          res.redirect(found.brand.url);
+        } else {
+          brand.save((err) => {
+            if (err) {
+              return next(err);
+            }
+            // Brand is saved so forward to the new brand detail page
+            res.redirect(brand.url);
+          });
+        }
+      });
+    }
+  },
+];
 
 // Delete brand on GET
 exports.brand_delete_get = (req, res, next) => {
-  res.send('Delete brand GET');
+  async.parallel(
+    {
+      brand(callback) {
+        Brand.findById(req.params.id).exec(callback);
+      },
+      brand_items(callback) {
+        SKU.find({ brand: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.brand === null) {
+        res.redirect('/stock/brands_list');
+      }
+      res.render('brand_delete', {
+        title: `Delete ${results.brand.name} brand`,
+        brand: results.brand,
+        brand_items: results.brand_items,
+      });
+    }
+  );
 };
 
 // Delete brand on POST
 exports.brand_delete_post = (req, res, next) => {
-  res.send('Delete brand POST');
+  async.parallel(
+    {
+      brand(callback) {
+        Brand.findById(req.params.id).exec(callback);
+      },
+      brand_items(callback) {
+        SKU.find({ brand: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.brand_items.length > 0) {
+        res.render('brand_delete', {
+          title: `Delete ${results.brand.name} brand`,
+          brand: results.brand,
+          brand_items: results.brand_items,
+        });
+      }
+      Brand.findByIdAndRemove(req.body.brandid, (err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/stock/all_brands');
+      });
+    }
+  );
 };
 
 // Form for updating brand on GET
