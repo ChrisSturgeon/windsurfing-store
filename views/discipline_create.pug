@@ -1,0 +1,16 @@
+extends layout 
+
+block content
+
+  h1=title
+
+  form(method="POST" action="")
+    div(class="flex flex-col max-w-md p-3 bg-sky-100 rounded")
+      label(for="discipline_name") Style name
+      input#name(name="discipline_name" type="text" placeholder="Wave, Slalom etc")
+      button(type="submit" class="bg-blue-600 text-white mt-2 rounded p-1 text-2xl") Create
+
+  if errors
+    ul 
+      for error in errors
+        li!= error.msg

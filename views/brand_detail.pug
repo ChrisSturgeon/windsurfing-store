@@ -2,9 +2,13 @@ extends layout
 
 block content
 
-  div(class="p-2")
+  div(class="p-4")
 
-    h1(class="text-4xl")= brand.name
+    div(class="flex flex-wrap justify-between items-center")
+      h1(class="text-4xl")= brand.name
+      a(href=`${brand.url}/update` class=" flex content-center p-1 rounded text-white bg-blue-400") Update
+      a(href=`${brand.url}/delete` class=" flex content-center p-1 rounded text-white bg-blue-400") Delete
+
     p=brand.about
 
     ul 

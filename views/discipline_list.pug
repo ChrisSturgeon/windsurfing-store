@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+
+  h1= title
+
+  a(href="/stock/discipline/create") Create new style
+
+  ul
+    each discipline in disciplines_list
+      li 
+        a(href=discipline.url) #{discipline.name}
+    
+    else
+      li There are no disciplines!
+

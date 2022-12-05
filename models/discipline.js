@@ -6,8 +6,6 @@ const DisciplineSchema = new Schema({
   name: {
     type: String,
     required: true,
-    enum: ['Wave', 'Freestyle', 'Freeride', 'Slalom', 'Kids'],
-    default: 'Wave',
   },
 });
 

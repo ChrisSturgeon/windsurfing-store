@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Require the controller modules
 const brand_controller = require('../controllers/brandController');
+const discipline_controller = require('../controllers/disciplineController');
 
 // GET home page
 router.get('/', brand_controller.index);
@@ -32,5 +33,19 @@ router.get('/brand/:id', brand_controller.brand_detail);
 
 // GET request for all brands page
 router.get('/all_brands', brand_controller.brand_list);
+
+// DISCIPLINE ROUTES
+
+// GET request for creating a new style
+router.get('/discipline/create', discipline_controller.discipline_create_get);
+
+// POST request for creating a new style
+router.post('/discipline/create', discipline_controller.discipline_create_post);
+
+// GET request for individual discipline
+router.get('/discipline/:id', discipline_controller.discipline_detail);
+
+// GET request for all disciplines page
+router.get('/all_disciplines', discipline_controller.disciplines_list);
 
 module.exports = router;

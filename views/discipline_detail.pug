@@ -1,0 +1,15 @@
+extends layout 
+
+block content 
+
+  h1= discipline.name
+
+  ul 
+    each item in items
+      li
+        a(href=item.url) #{item.model}
+    
+
+    else
+      li There are no items in this discipline yet
+
