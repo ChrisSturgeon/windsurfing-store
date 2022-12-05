@@ -6,7 +6,7 @@ const SKUSchema = new Schema({
   category: {
     type: String,
     required: true,
-    enum: ['Board', 'Sail', 'Mast', 'Boom'],
+    enum: ['Board', 'Sail', 'Mast', 'Boom', 'Other'],
     default: 'Board',
   },
   brand: [{ type: Schema.Types.ObjectId, ref: 'Brand' }],

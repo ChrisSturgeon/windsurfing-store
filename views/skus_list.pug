@@ -1,0 +1,10 @@
+extends layout 
+
+block content 
+
+  p All skus: 
+
+  ul 
+    each sku in list_skus
+      li 
+        a(href=sku.url) #{sku.model}

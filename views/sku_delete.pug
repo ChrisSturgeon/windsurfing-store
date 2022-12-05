@@ -1,0 +1,20 @@
+extends layout 
+
+block content 
+
+  h1= title
+
+  if sku_instances.length
+    p(class="font-bold") You must first delete the following stock items before you can delete this SKU
+
+    ul
+      each instance in sku_instances
+        li
+          a(href=instance.url) #{instance.size_formatted}
+    
+  else 
+    p(class="font-bold") Do you really want to delete this SKU?
+
+    form(method="POST" action='')
+      input(type="hidden" name='skuID' value=sku._id required=true)
+      button(type="submit" class="bg-blue-600 text-white mt-2 rounded p-1 text-2xl") Delete
