@@ -5,7 +5,6 @@ const Brand = require('../models/brand');
 const SKUInstance = require('../models/skuInstance');
 const Discipline = require('../models/discipline');
 const Sku = require('../models/sku');
-const sku = require('../models/sku');
 
 // Form for new SKU on get
 exports.sku_create_get = (req, res, next) => {
@@ -245,15 +244,26 @@ exports.sku_update_post = [
 
 // Display details page for individual SKU
 exports.sku_details = (req, res, next) => {
-  SKU.findById(req.params.id).exec((err, found_sku) => {
-    if (err) {
-      return next(err);
+  async.parallel(
+    {
+      sku(callback) {
+        SKU.findById(req.params.id).exec(callback);
+      },
+      sku_instances(callback) {
+        SKUInstance.find({ sku: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      res.render('sku_detail', {
+        title: `Details for ${results.sku.model}`,
+        sku: results.sku,
+        sku_instances: results.sku_instances,
+      });
     }
-    res.render('sku_detail', {
-      title: `Details for ${found_sku.model}`,
-      sku: found_sku,
-    });
-  });
+  );
 };
 
 // Display list of all SKUs

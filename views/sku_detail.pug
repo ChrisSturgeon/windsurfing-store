@@ -6,3 +6,10 @@ block content
 
   p=sku.model
   p=sku.price
+  
+  h2(class="font-bold") Stock:
+
+  ul 
+    for instance in sku_instances
+      li
+        a(href=instance.url) #{instance.size_formatted} in #{instance.quality} condition

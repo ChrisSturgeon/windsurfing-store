@@ -5,6 +5,7 @@ const router = express.Router();
 const brand_controller = require('../controllers/brandController');
 const discipline_controller = require('../controllers/disciplineController');
 const sku_controller = require('../controllers/skuController');
+const sku_instance_controller = require('../controllers/skuInstanceController');
 
 // GET home page
 router.get('/', brand_controller.index);
@@ -98,5 +99,49 @@ router.get('/sku/:id', sku_controller.sku_details);
 
 // GET request for viewing all SKUs
 router.get('/skus_list', sku_controller.skus_list);
+
+// SKU Instance routes
+
+// GET request for creating a new SKU instance
+router.get(
+  '/sku_instance/create',
+  sku_instance_controller.sku_instance_create_get
+);
+
+// POST request for creating a new SKU instance
+router.post(
+  '/sku_instance/create',
+  sku_instance_controller.sku_instance_create_post
+);
+
+// GET request for deleting a SKU instance
+router.get(
+  '/sku_instance/:id/delete',
+  sku_instance_controller.sku_instance_delete_get
+);
+
+// POST request for deleting a SKU instance
+router.post(
+  '/sku_instance/:id/delete',
+  sku_instance_controller.sku_instance_delete_post
+);
+
+// GET request for updating a SKU instance
+router.get(
+  '/sku_instance/:id/update',
+  sku_instance_controller.sku_instance_update_get
+);
+
+// POST request for updating a SKU instance
+router.post(
+  '/sku_instance/:id/update',
+  sku_instance_controller.sku_instance_update_post
+);
+
+// GET request for viewing an individual SKU instance
+router.get('/sku_instance/:id', sku_instance_controller.instance_details);
+
+// GET request for viewing all SKUs
+router.get('/sku_instances_list', sku_instance_controller.instance_list);
 
 module.exports = router;
