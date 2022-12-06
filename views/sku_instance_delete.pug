@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+
+  h1= title
+
+  p(class="font-bold") Do you really want to delete this stock item?
+
+  form(method="POST" action='')
+
+    input(type="hidden" name='instanceID' value=instance._id required=true)
+    button(type="submit" class="bg-blue-600 text-white mt-2 rounded p-1 text-2xl") Delete

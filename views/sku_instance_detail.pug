@@ -3,6 +3,10 @@ extends layout
 block content 
 
   h1= title
+  a(href=sku_instance.url + '/delete') Delete Stock Item
+  a(href=sku_instance.url + '/update') Update Stock Item
 
   p #{sku.model}
   p #{sku_instance.quality}
+
+  
