@@ -7,20 +7,14 @@ block content
     h1(class="font-bold text-6xl")= brand.name
 
     div(class=" flex gap-2 text-blue-400 mb-2")
-
       a(href=`${brand.url}/update` ) Update
       a(href=`${brand.url}/delete` ) Delete
-
-
     h2(class="font-bold text-2xl") About
     p=brand.about
-
     h2(class="font-bold text-2xl mt-2") Items by #{brand.name}
 
     div(class="p-2 md:p-5 lg:px-20 xl:p-50 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-8")
-
       each item in items_list 
-
         a(href=item.url class="flex justify-center w-full ")
           div(class="flex w-full flex-col md:flex-row md:max-w-xl rounded-lg bg-gray-100  hover:bg-gray-200 shadow-lg")
             if item.image

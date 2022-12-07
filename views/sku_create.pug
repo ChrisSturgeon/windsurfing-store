@@ -3,11 +3,7 @@ extends layout
 block content
 
   div(class="flex flex-col p-2")
-
-
-
     h1(class="text-2xl font-bold")= title
-
 
     form(method="POST" enctype="multipart/form-data" action="")
       div(class="flex flex-col max-w-md p-3 bg-sky-100 rounded")
@@ -23,7 +19,6 @@ block content
         select(type="select" name="style")
           for discipline in discipline_list 
             option(value=discipline._id selected=(sku ? (sku.discipline.toString() === discipline._id.toString()) : false)) #{discipline.name}
-
 
         label(for="brand") Brand 
         select(type="select" name="brand" placeholder="Select Brand" required=true)

@@ -2,7 +2,6 @@ const SKU = require('../models/sku');
 const SKUInstance = require('../models/skuInstance');
 const async = require('async');
 const { body, validationResult } = require('express-validator');
-const { response } = require('../app');
 
 // Form for new SKU on get
 exports.sku_instance_create_get = (req, res, next) => {

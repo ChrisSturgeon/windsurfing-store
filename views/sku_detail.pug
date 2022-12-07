@@ -10,14 +10,9 @@ block content
     div(class=" flex flex-col md:flex-row md:gap-2 text-blue-400")
       a(href=sku.url + "/update") Update
       a(href=sku.url + "/delete") Delete
-
- 
-
     if sku.image 
       img(class="w-full md:h-auto md:w-60 " src="/uploads/" + sku.image )
 
-
-    
     h2(class="font-bold") Stock:
 
     ul 

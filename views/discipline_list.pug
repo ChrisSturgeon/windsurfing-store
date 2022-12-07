@@ -4,9 +4,6 @@ block content
 
  div(class="p-2 flex flex-col items-center")
   h2(class="font-bold text-3xl mb-2") #{title}
-
- 
-
   ul(class="text-blue-400 flex flex-col items-center")
     each discipline in disciplines_list
       li 
@@ -15,6 +12,5 @@ block content
     else
       li There are no disciplines!
       
-    
     a(href="/stock/discipline/create") +
 
