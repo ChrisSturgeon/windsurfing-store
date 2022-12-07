@@ -6,6 +6,32 @@ const SKUInstance = require('../models/skuInstance');
 const Discipline = require('../models/discipline');
 const Sku = require('../models/sku');
 
+// Images
+const multer = require('multer');
+const storage = multer.diskStorage({
+  destination: function (req, res, cb) {
+    cb(null, './public/uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  // Rejects file if not jpeg or png type
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(new Error('File must be jpeg or png format'), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 * 3 },
+  fileFilter: fileFilter,
+});
+
 // Form for new SKU on get
 exports.sku_create_get = (req, res, next) => {
   async.parallel(
@@ -32,6 +58,7 @@ exports.sku_create_get = (req, res, next) => {
 
 // Form for new SKU on POST
 exports.sku_create_post = [
+  upload.single('productImage'),
   // Validate and sanitise the inputs
   body('category', 'Category required').isLength({ min: 1 }).escape(),
   body('style', 'Style required').isLength({ min: 1 }).escape(),
@@ -44,6 +71,7 @@ exports.sku_create_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
+    console.log(req.file);
 
     const sku = new Sku({
       category: req.body.category,
@@ -51,6 +79,7 @@ exports.sku_create_post = [
       model: req.body.model,
       discipline: req.body.style,
       price: req.body.price,
+      image: req.file.filename,
     });
 
     if (!errors.isEmpty()) {
@@ -185,6 +214,7 @@ exports.sku_update_get = (req, res, next) => {
 
 // Form for updating SKU on POST
 exports.sku_update_post = [
+  upload.single('productImage'),
   // Validate and sanitise the inputs
   body('category', 'Category required').isLength({ min: 1 }).escape(),
   body('style', 'Style required').isLength({ min: 1 }).escape(),
@@ -204,6 +234,7 @@ exports.sku_update_post = [
       model: req.body.model,
       discipline: req.body.style,
       price: req.body.price,
+      image: req.file.filename,
       _id: req.params.id,
     });
 
@@ -258,7 +289,7 @@ exports.sku_details = (req, res, next) => {
         return next(err);
       }
       res.render('sku_detail', {
-        title: `Details for ${results.sku.model}`,
+        title: `${results.sku.model}`,
         sku: results.sku,
         sku_instances: results.sku_instances,
       });

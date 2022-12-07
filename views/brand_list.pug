@@ -2,17 +2,13 @@ extends layout
 
 block content 
   
-  div(class="flex flex-col justify-center items-center gap-5")
+ div(class="p-2 flex flex-col items-center")
+    h2(class="font-bold text-3xl mb-2") All Brands
 
-
-    h1(class="text-3xl")= title
-
-    ul 
+    ul(class="text-blue-400 flex flex-col items-center")
       each brand in list_brands 
         li 
           a(href=brand.url) #{brand.name}
       
-      else
-        li There are no brands!
 
-    a(href="/stock/brand/create") Create new brand
+    a(href="/stock/brand/create") +

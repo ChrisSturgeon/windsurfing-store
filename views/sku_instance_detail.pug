@@ -2,11 +2,16 @@ extends layout
 
 block content 
 
-  h1= title
-  a(href=sku_instance.url + '/delete') Delete Stock Item
-  a(href=sku_instance.url + '/update') Update Stock Item
+ div(class="p-2 flex flex-col items-center")
 
-  p #{sku.model}
-  p #{sku_instance.quality}
+  h1(class="font-bold text-3xl" ) #{sku.model} Stock Item
+
+  div(class=" flex gap-2 text-blue-400 mb-2")
+    a(href=sku_instance.url + '/delete') Delete 
+    a(href=sku_instance.url + '/update') Update
+
+  p Model: #{sku.model}
+  p Size: #{sku_instance.size_formatted}
+  p Quality: #{sku_instance.quality}
 
   

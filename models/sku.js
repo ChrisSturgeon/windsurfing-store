@@ -13,6 +13,7 @@ const SKUSchema = new Schema({
   model: { type: String, maxLength: 400 },
   discipline: [{ type: Schema.Types.ObjectId, ref: 'Discipline' }],
   price: { type: Number },
+  image: String,
 });
 
 // SKU model virtuals

@@ -2,15 +2,19 @@ extends layout
 
 block content 
 
-  h1= title
+ div(class="p-2 flex flex-col items-center")
+  h2(class="font-bold text-3xl mb-2") #{title}
 
-  a(href="/stock/discipline/create") Create new style
+ 
 
-  ul
+  ul(class="text-blue-400 flex flex-col items-center")
     each discipline in disciplines_list
       li 
         a(href=discipline.url) #{discipline.name}
     
     else
       li There are no disciplines!
+      
+    
+    a(href="/stock/discipline/create") +
 

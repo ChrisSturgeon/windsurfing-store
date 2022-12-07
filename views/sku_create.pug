@@ -2,40 +2,46 @@ extends layout
 
 block content
 
-  h1= title
+  div(class="flex flex-col p-2")
 
 
-  form(method="POST" action="")
-    div(class="flex flex-col max-w-md p-3 bg-sky-100 rounded")
-      label(for="category") Category
-      select(type="select" name="category")
-        option(value="Board" selected=(sku ? (sku.category === "Board") : false)) Board
-        option(value="Sail" selected=(sku ? (sku.category === "Sail") : false)) Sail
-        option(value="Mast" selected=(sku ? (sku.category === "Mast") : false)) Mast
-        option(value="Boom" selected=(sku ? (sku.category === "Boom") : false)) Boom
-        option(value="Other" selected=(sku ? (sku.category === "Other") : false)) Other
 
-      label(for="style") Style
-      select(type="select" name="style")
-        for discipline in discipline_list 
-          option(value=discipline._id selected=(sku ? (sku.discipline.toString() === discipline._id.toString()) : false)) #{discipline.name}
+    h1(class="text-2xl font-bold")= title
 
 
-      label(for="brand") Brand 
-      select(type="select" name="brand" placeholder="Select Brand" required=true)
-        for brand in brands_list
-          option(value=brand._id selected=(sku ? (sku.brand.toString() === brand._id.toString()) : false)) #{brand.name}
-      label(for="model" ) Model
-      input#model(name="model" type="text" value=(sku ? sku.model : '') placeholder="Model name" class="p-1 rounded")
+    form(method="POST" enctype="multipart/form-data" action="")
+      div(class="flex flex-col max-w-md p-3 bg-sky-100 rounded")
+        label(for="category") Category
+        select(type="select" name="category")
+          option(value="Board" selected=(sku ? (sku.category === "Board") : false)) Board
+          option(value="Sail" selected=(sku ? (sku.category === "Sail") : false)) Sail
+          option(value="Mast" selected=(sku ? (sku.category === "Mast") : false)) Mast
+          option(value="Boom" selected=(sku ? (sku.category === "Boom") : false)) Boom
+          option(value="Other" selected=(sku ? (sku.category === "Other") : false)) Other
 
-      label(for="price") Price (£)
-      input(name="price" type="number" value=(sku ? sku.price : '') required=true)
-      button(type="submit" class="bg-blue-600 text-white mt-2 rounded p-1 text-2xl") #{sku ? 'Update': 'Create'}
+        label(for="style") Style
+        select(type="select" name="style")
+          for discipline in discipline_list 
+            option(value=discipline._id selected=(sku ? (sku.discipline.toString() === discipline._id.toString()) : false)) #{discipline.name}
 
 
-  
+        label(for="brand") Brand 
+        select(type="select" name="brand" placeholder="Select Brand" required=true)
+          for brand in brands_list
+            option(value=brand._id selected=(sku ? (sku.brand.toString() === brand._id.toString()) : false)) #{brand.name}
+        label(for="model" ) Model
+        input#model(name="model" type="text" value=(sku ? sku.model : '') placeholder="Model name" class="p-1 rounded")
 
-  if errors
-    ul
-      for error in errors
-        li!= error.msg
+        label(for="price") Price (£)
+        input(name="price" type="number" value=(sku ? sku.price : '') required=true)
+        label(for="image") Image
+        input(type="file" name="productImage")
+        button(type="submit" class="bg-blue-400 text-white mt-2 rounded p-1 text-2xl") #{sku ? 'Update': 'Create'}
+
+
+    
+
+    if errors
+      ul
+        for error in errors
+          li!= error.msg
