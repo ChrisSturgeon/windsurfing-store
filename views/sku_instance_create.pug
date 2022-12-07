@@ -2,31 +2,33 @@ extends layout
 
 block content 
 
-  h1= title
+  div(class="flex flex-col p-2")
 
-  form(method="POST" action='')
-    div(class="flex flex-col max-w-md p-3 bg-sky-100 rounded")
-      label(for="model") Model 
-      select(type="select" name='model' required=true)
-        for sku in sku_list 
-          option(value=sku._id selected=( instance ? (sku._id.toString() === instance.sku.toString()) : false)) #{sku.model}
+    h1(class="text-2xl font-bold")= title
 
-      label(for="size") Size
-      input(name='size' type='number' required=true value=(instance ? instance.size: ''))
-      label(for='size_unit' ) Size unit 
-      input(name='size_unit' type='text' required=true value=(instance ? instance.unit : ''))
+    form(method="POST" action='')
+      div(class="flex flex-col max-w-md p-3 bg-sky-100 rounded")
+        label(for="model") Model 
+        select(type="select" name='model' required=true)
+          for sku in sku_list 
+            option(value=sku._id selected=( instance ? (sku._id.toString() === instance.sku.toString()) : false)) #{sku.model}
 
-      label(for='quality') Quality 
-      select(name='quality' type='select' default='New' required=true)
-        option(value='New' selected=(instance ? (instance.quality === 'New') : false)) New 
-        option(value='Used - Immaculate' selected=(instance ? (instance.quality === 'Used - Immaculate') : false)) Used - Immaculate
-        option(value='Used - Good' selected=(instance ? (instance.quality === 'Used - Good') : false)) Used - Good 
-        option(value='Used - Worn' selected=(instance ? (instance.quality === 'Used - Worn') : false)) Used - Worn
-      button(type="submit" class="bg-blue-600 text-white mt-2 rounded p-1 text-2xl") #{sku ? 'Update': 'Create'}
+        label(for="size") Size
+        input(name='size' type='number' required=true value=(instance ? instance.size: ''))
+        label(for='size_unit' ) Size unit 
+        input(name='size_unit' type='text' required=true value=(instance ? instance.unit : ''))
 
-      
-  if errors
-    ul
-      for error in errors
-        li!= error.msg
+        label(for='quality') Quality 
+        select(name='quality' type='select' default='New' required=true)
+          option(value='New' selected=(instance ? (instance.quality === 'New') : false)) New 
+          option(value='Used - Immaculate' selected=(instance ? (instance.quality === 'Used - Immaculate') : false)) Used - Immaculate
+          option(value='Used - Good' selected=(instance ? (instance.quality === 'Used - Good') : false)) Used - Good 
+          option(value='Used - Worn' selected=(instance ? (instance.quality === 'Used - Worn') : false)) Used - Worn
+        button(type="submit" class="bg-blue-400 text-white mt-2 rounded p-1 text-2xl") #{sku ? 'Update': 'Create'}
+
+        
+    if errors
+      ul
+        for error in errors
+          li!= error.msg
 

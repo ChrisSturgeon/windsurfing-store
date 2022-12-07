@@ -2,9 +2,9 @@ extends layout
 
 block content
 
-  div(class="flex flex-col p-2")
+  div(class="flex flex-col p-2 md:")
 
-    h1(class="text-2xl")= title
+    h1(class="text-2xl font-bold")= title
 
     form(method="POST" action="")
       div(class="flex flex-col max-w-md p-3 bg-sky-100 rounded")
@@ -12,7 +12,7 @@ block content
         input#name(name="brand_name" value=(brand ? brand.name : '') type="text", placeholder="Brand name here" class="p-1 rounded")
         label(for="about") About
         textarea#about(name="about" class="p-1 rounded" placeholder="About the brand...") #{brand ? brand.about: ''}
-        button(type="submit" class="bg-blue-600 text-white mt-2 rounded p-1 text-2xl") #{brand ? 'Update': 'Create'}
+        button(type="submit" class="bg-blue-400 text-white mt-2 rounded p-1 text-2xl") #{brand ? 'Update': 'Create'}
 
     if errors
       ul

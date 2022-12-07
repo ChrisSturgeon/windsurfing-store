@@ -2,9 +2,18 @@ extends layout
 
 block content 
 
-  p All skus: 
+  div(class="p-2 md:p-5 lg:px-20 xl:p-50 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-8")
 
-  ul 
     each sku in list_skus
-      li 
-        a(href=sku.url) #{sku.model}
+
+      a(href=sku.url class="flex justify-center w-full ")
+        div(class="flex w-full flex-col md:flex-row md:max-w-xl rounded-lg bg-gray-100  hover:bg-gray-200 shadow-lg")
+          if sku.image
+            img(class="w-full max-h-25 md:h-auto object-cover md:w-48 rounded-t-lg md:rounded-none md:rounded-l-lg" src="/uploads/" + sku.image)
+          div(class="p-2 md:w-full flex md:flex-col justify-between md:justify-center md:gap-4 md:items-center md:align-center")
+            div(class="flex flex-col md:items-center")
+              p(class="font-bold") #{sku.model}
+              p(class="italic") #{sku.category}
+            div(class="flex items-center")
+              p(class="align-bottom ") £#{sku.price}
+          

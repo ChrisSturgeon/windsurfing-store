@@ -2,8 +2,24 @@ extends layout
 
 block content
 
-  p Welcome to Surf Hut. Shop by:
+ div(class="p-2 flex flex-col items-center ")
 
-  ul
-    li
-      a(href="stock/all_brands") Brand
+    h2(class="font-bold text-3xl mb-2") Welcome!
+    p Shop By:
+
+    ul(class="text-blue-400 flex flex-col items-center ")
+      li
+        a(href="stock/skus_list") All Components
+      li        
+        a(href="stock/all_brands") Brand
+      li
+        a(href="stock/all_disciplines") Style
+
+    p Or Add:
+      ul(class="text-blue-400 flex flex-col items-center")
+        li
+          a(href="stock/brand/create")  New Brand
+        li
+          a(href="stock/sku/create")  New Model
+        li
+          a(href="stock/sku_instance/create")  New Stock
